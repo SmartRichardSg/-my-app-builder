@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My App Builder V3</title>
+<title>My App Builder V4</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f3f5f7;color:#1f2937}
@@ -128,7 +128,7 @@ footer{text-align:center;color:#7b8490;font-size:12px;padding:12px}
     </div>
   </div>
 </main>
-<footer>V3 • Data is saved locally in this browser.</footer>
+<footer>V4 • Data is saved locally in this browser.</footer>
 
 <script>
 let projects=JSON.parse(localStorage.getItem("myAppBuilderProjects")||"[]");
@@ -165,8 +165,18 @@ function editProject(i){
  document.getElementById("version").value=p.version||"V3"; document.getElementById("level").value=p.level||"Simple"; document.getElementById("status").value=p.status||"Working";
  document.getElementById("editor").classList.remove("hidden");
 }
+function val(id){return document.getElementById(id).value.trim();}
 function saveProject(){
- let p={name:name.value.trim(),purpose:purpose.value.trim(),functions:functions.value.trim(),level:level.value,status:status.value,github:github.value.trim(),version:version.value.trim()||"V3",notes:notes.value.trim()};
+ let p={
+   name:val("name"),
+   purpose:val("purpose"),
+   functions:val("functions"),
+   level:document.getElementById("level").value,
+   status:document.getElementById("status").value,
+   github:val("github"),
+   version:val("version")||"V3",
+   notes:val("notes")
+ };
  if(!p.name){alert("Please enter an app name.");return;}
  if(editIndex===null) projects.push(p); else projects[editIndex]=p;
  save(); closeEditor(); render();
@@ -194,9 +204,15 @@ function makeRevision(){
  document.getElementById("revisionPrompt").textContent=`Revise my existing "${p.name}" web app. Keep everything that already works. Fix only the problem described below, unless another change is required for the fix. Return the COMPLETE replacement index.html file, not a partial code snippet. Keep the app mobile-friendly and self-contained. Problem: ${problem}`;
 }
 function saveUpdate(){
- let p=projects[currentIndex], v=document.getElementById("guideVersion").value.trim()||p.version, note=document.getElementById("changeNote").value.trim();
- p.version=v; if(note)p.notes=(p.notes? p.notes+" | ":"")+v+": "+note;
- p.status="Editing"; save(); document.getElementById("guideInfo").textContent=`${p.level} project • ${p.version} • ${p.status}`; alert("Project updated.");
+ let p=projects[currentIndex];
+ let v=document.getElementById("guideVersion").value.trim()||p.version;
+ let note=document.getElementById("changeNote").value.trim();
+ p.version=v;
+ if(note)p.notes=(p.notes? p.notes+" | ":"")+v+": "+note;
+ p.status="Editing";
+ save();
+ document.getElementById("guideInfo").textContent=`${p.level} project • ${p.version} • ${p.status}`;
+ alert("Project updated.");
 }
 function deleteCurrent(){
  if(confirm("Delete this project from this browser?")){projects.splice(currentIndex,1);save();closeGuide();}
