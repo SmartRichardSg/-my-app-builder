@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My App Builder V4</title>
+<title>My App Builder V5</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f3f5f7;color:#1f2937}
@@ -56,6 +56,19 @@ footer{text-align:center;color:#7b8490;font-size:12px;padding:12px}
       <option value="Standard">Standard — build and revise</option>
       <option value="Advanced">Advanced — build in stages</option>
     </select>
+    <label>App category / colour</label>
+    <select id="category">
+      <option value="Health — green">Health — green</option>
+      <option value="Work — blue">Work — blue</option>
+      <option value="Finance — gold">Finance — gold</option>
+      <option value="Exercise — orange">Exercise — orange</option>
+      <option value="Learning — purple">Learning — purple</option>
+      <option value="Personal — teal">Personal — teal</option>
+      <option value="Travel — sky blue">Travel — sky blue</option>
+      <option value="Other — choose a suitable colour">Other — choose a suitable colour</option>
+    </select>
+    <label>Icon idea (optional)</label>
+    <input id="icon" placeholder="e.g. heart + pulse, book + pencil, suitcase">
     <label>Status</label>
     <select id="status">
       <option>Working</option><option>Editing</option><option>Paused</option>
@@ -128,7 +141,7 @@ footer{text-align:center;color:#7b8490;font-size:12px;padding:12px}
     </div>
   </div>
 </main>
-<footer>V4 • Data is saved locally in this browser.</footer>
+<footer>V5 • Data is saved locally in this browser.</footer>
 
 <script>
 let projects=JSON.parse(localStorage.getItem("myAppBuilderProjects")||"[]");
@@ -145,6 +158,7 @@ function render(){
    <span class="badge ${p.status==="Editing"?"editing":p.status==="Paused"?"paused":""}">${esc(p.status)}</span>
    <span class="badge">${esc(p.version||"V3")}</span>
    <span class="badge">${esc(p.level||"Simple")}</span>
+   <span class="badge">${esc(p.category||"Personal — teal")}</span>
    <p class="muted">${esc(p.purpose||"No description")}</p>
    <div class="row">
     <button class="primary small" onclick="openGuide(${i})">Open project</button>
@@ -155,14 +169,14 @@ function render(){
 function showNew(){
  editIndex=null; document.getElementById("editorTitle").textContent="New Project";
  ["name","purpose","functions","github","notes"].forEach(id=>document.getElementById(id).value="");
- document.getElementById("version").value="V3"; document.getElementById("level").value="Simple"; document.getElementById("status").value="Working";
+ document.getElementById("version").value="V3"; document.getElementById("level").value="Simple"; document.getElementById("category").value="Personal — teal"; document.getElementById("icon").value=""; document.getElementById("status").value="Working";
  document.getElementById("editor").classList.remove("hidden");
 }
 function editProject(i){
  editIndex=i; let p=projects[i];
  document.getElementById("editorTitle").textContent="Edit Project";
  ["name","purpose","functions","github","notes"].forEach(id=>document.getElementById(id).value=p[id]||"");
- document.getElementById("version").value=p.version||"V3"; document.getElementById("level").value=p.level||"Simple"; document.getElementById("status").value=p.status||"Working";
+ document.getElementById("version").value=p.version||"V3"; document.getElementById("level").value=p.level||"Simple"; document.getElementById("category").value=p.category||"Personal — teal"; document.getElementById("icon").value=p.icon||""; document.getElementById("status").value=p.status||"Working";
  document.getElementById("editor").classList.remove("hidden");
 }
 function val(id){return document.getElementById(id).value.trim();}
@@ -172,6 +186,8 @@ function saveProject(){
    purpose:val("purpose"),
    functions:val("functions"),
    level:document.getElementById("level").value,
+   category:document.getElementById("category").value,
+   icon:val("icon"),
    status:document.getElementById("status").value,
    github:val("github"),
    version:val("version")||"V3",
@@ -186,9 +202,9 @@ function openGuide(i){
  currentIndex=i; let p=projects[i];
  document.getElementById("guideTitle").textContent="🛠️ "+p.name;
  document.getElementById("guideInfo").textContent=`${p.level} project • ${p.version} • ${p.status}`;
- let base=`I want to build a simple personal web app called "${p.name}". Purpose: ${p.purpose}. Main functions: ${p.functions}. Starting level: ${p.level}.`;
- document.getElementById("prompt1").textContent=base+` Keep the design clean and mobile-friendly. Use plain HTML, CSS and JavaScript. Avoid unnecessary frameworks or services.`;
- document.getElementById("prompt2").textContent=`Create the complete working index.html for this app. Keep it self-contained in one file where practical. Make it suitable for use on an iPhone. Return the complete file so I can copy and paste it into GitHub. Do not give me partial code.`;
+ let base=`I want to build a simple personal web app called "${p.name}". Purpose: ${p.purpose}. Main functions: ${p.functions}. Starting level: ${p.level}. App category/theme: ${p.category||"Personal — teal"}. Icon idea: ${p.icon||"Create a unique icon that clearly represents the app."}.`;
+ document.getElementById("prompt1").textContent=base+` Keep the design clean and mobile-friendly. Use plain HTML, CSS and JavaScript. Avoid unnecessary frameworks or services. Give the app a distinctive visual identity: use the selected category colour and create a simple unique app icon. Prefer an inline SVG or other self-contained icon so no external image file is required.`;
+ document.getElementById("prompt2").textContent=`Create the complete working index.html for this app. Keep it self-contained in one file where practical. Make it suitable for use on an iPhone. Use the ${p.category||"Personal — teal"} visual theme and create a unique, simple icon based on "${p.icon||"the app purpose"}". Prefer an inline SVG icon and include it in the app header; do not require external image files. Return the complete file so I can copy and paste it into GitHub. Do not give me partial code.`;
  document.getElementById("revisionPrompt").textContent="Enter the problem above, then tap Generate revision prompt.";
  document.getElementById("guideVersion").value=p.version||"V3"; document.getElementById("changeNote").value="";
  document.getElementById("guide").classList.remove("hidden");
@@ -201,7 +217,7 @@ function copyText(id){
 function makeRevision(){
  let p=projects[currentIndex], problem=document.getElementById("problem").value.trim();
  if(!problem){alert("Describe the problem first.");return;}
- document.getElementById("revisionPrompt").textContent=`Revise my existing "${p.name}" web app. Keep everything that already works. Fix only the problem described below, unless another change is required for the fix. Return the COMPLETE replacement index.html file, not a partial code snippet. Keep the app mobile-friendly and self-contained. Problem: ${problem}`;
+ document.getElementById("revisionPrompt").textContent=`Revise my existing "${p.name}" web app. Keep everything that already works, including its ${p.category||"Personal — teal"} visual theme and unique app icon. Fix only the problem described below, unless another change is required for the fix. Return the COMPLETE replacement index.html file, not a partial code snippet. Keep the app mobile-friendly and self-contained. Problem: ${problem}`;
 }
 function saveUpdate(){
  let p=projects[currentIndex];
