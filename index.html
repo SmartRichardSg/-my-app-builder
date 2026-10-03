@@ -3,263 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My App Builder V6</title>
+<meta name="theme-color" content="#159a8c">
+<title>Mid-Day Journal</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f3f5f7;color:#1f2937}
-header{background:#17324d;color:white;padding:22px 18px 20px;text-align:center}
-header h1{margin:0;font-size:25px} header p{margin:6px 0 0;opacity:.85;font-size:14px}
-main{max-width:760px;margin:auto;padding:16px}
-.card{background:white;border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:0 2px 10px #0000000d}
-h2{font-size:19px;margin:0 0 12px} h3{font-size:16px;margin:0 0 7px}
-label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
-input,textarea,select{width:100%;padding:12px;border:1px solid #d1d5db;border-radius:10px;font-size:16px;background:#fff}
-textarea{min-height:90px;resize:vertical}
-button{border:0;border-radius:10px;padding:12px 15px;font-size:15px;font-weight:650;cursor:pointer}
-.primary{background:#17324d;color:white}.secondary{background:#e8eef4;color:#17324d}
-.danger{background:#fee2e2;color:#991b1b}.small{padding:8px 11px;font-size:13px}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#eef8f6;color:#20333a}
+header{background:#159a8c;color:white;padding:22px 18px 20px;text-align:center}
+.icon{width:64px;height:64px;margin:auto;display:block}
+header h1{margin:8px 0 3px;font-size:28px}
+header p{margin:0;opacity:.9;font-size:14px}
+main{max-width:700px;margin:auto;padding:15px}
+.card{background:white;border-radius:17px;padding:18px;margin-bottom:15px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+h2{margin:0 0 13px;font-size:21px} h3{margin:0 0 8px;font-size:17px}
+label{display:block;margin:13px 0 6px;font-weight:650;font-size:14px}
+input,textarea{width:100%;border:1px solid #ccd9d7;border-radius:11px;padding:12px;font-size:16px;font-family:inherit;background:white}
+textarea{min-height:105px;resize:vertical}
+button{border:0;border-radius:11px;padding:12px 15px;font-size:15px;font-weight:650;cursor:pointer}
+.primary{background:#159a8c;color:white}.secondary{background:#e2f1ef;color:#126e65}.danger{background:#fde4e4;color:#a52b2b}.small{padding:8px 11px;font-size:13px}
 .row{display:flex;gap:8px;flex-wrap:wrap}
-.project{border:1px solid #e1e5e9;border-radius:13px;padding:14px;margin-top:10px}
-.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#e8f5e9;color:#216e39;font-size:12px;font-weight:700;margin:3px 3px 7px 0}
-.badge.editing{background:#fff4d6;color:#8a5a00}.badge.paused{background:#eee;color:#555}
-.step{border-left:4px solid #17324d;padding:12px 12px 12px 14px;margin:10px 0;background:#f8fafc;border-radius:0 10px 10px 0}
-.step p{margin:6px 0;font-size:14px;line-height:1.45}
-.prompt{background:#f1f5f9;border:1px solid #dbe2e8;border-radius:10px;padding:11px;font-size:13px;white-space:pre-wrap;margin:8px 0}
-.hidden{display:none}.muted{color:#6b7280;font-size:13px}.check{display:flex;gap:8px;align-items:center;margin:8px 0;font-size:14px}
-.check input{width:auto}
-footer{text-align:center;color:#7b8490;font-size:12px;padding:12px}
+.entry{border:1px solid #dbe5e3;border-radius:13px;padding:14px;margin-top:10px}
+.entry-date{color:#159a8c;font-weight:700;margin-bottom:8px}
+.entry-preview{color:#53656b;line-height:1.45;white-space:pre-wrap}
+.muted{color:#718087;font-size:13px}.hidden{display:none}
+.search{margin-bottom:12px}
+.setting{display:flex;align-items:center;gap:9px;margin:10px 0}.setting input{width:auto}
+footer{text-align:center;color:#78868b;font-size:12px;padding:10px 10px 25px}
 </style>
 </head>
 <body>
 <header>
-  <h1>🛠️ My App Builder</h1>
-  <p>Plan • Build • Revise • Keep track</p>
+<svg class="icon" viewBox="0 0 100 100" aria-label="Sun journal pencil icon">
+<circle cx="35" cy="35" r="20" fill="#ffd85c"/>
+<g stroke="#ffd85c" stroke-width="5" stroke-linecap="round">
+<line x1="35" y1="6" x2="35" y2="0"/><line x1="35" y1="64" x2="35" y2="70"/>
+<line x1="6" y1="35" x2="0" y2="35"/><line x1="64" y1="35" x2="70" y2="35"/>
+<line x1="14" y1="14" x2="9" y2="9"/><line x1="56" y1="56" x2="61" y2="61"/>
+<line x1="56" y1="14" x2="61" y2="9"/><line x1="14" y1="56" x2="9" y2="61"/>
+</g>
+<rect x="38" y="43" width="43" height="43" rx="5" fill="white" stroke="#0d6f66" stroke-width="4"/>
+<line x1="47" y1="55" x2="72" y2="55" stroke="#159a8c" stroke-width="4" stroke-linecap="round"/>
+<line x1="47" y1="65" x2="68" y2="65" stroke="#159a8c" stroke-width="4" stroke-linecap="round"/>
+<line x1="47" y1="75" x2="63" y2="75" stroke="#159a8c" stroke-width="4" stroke-linecap="round"/>
+<path d="M69 74 L84 59 L91 66 L76 81 L68 83 Z" fill="#ffcf55" stroke="#0d6f66" stroke-width="3"/>
+<path d="M84 59 L87 56 L94 63 L91 66 Z" fill="#f4a62a" stroke="#0d6f66" stroke-width="3"/>
+</svg>
+<h1>Mid-Day Journal</h1><p>Pause • Reflect • Plan the rest of your day</p>
 </header>
 
 <main>
-  <div class="card">
-    <div class="row" style="justify-content:space-between;align-items:center">
-      <h2>My Projects</h2>
-      <button class="primary" onclick="showNew()">＋ New Project</button>
-    </div>
-    <div id="projectList"></div>
-  </div>
+<section id="home">
+<div class="card">
+<div class="row" style="justify-content:space-between;align-items:center">
+<h2>Today's Journal</h2><button class="primary" onclick="newEntry()">＋ New Entry</button>
+</div>
+<p id="todayText" class="muted"></p>
+</div>
 
-  <div id="editor" class="card hidden">
-    <h2 id="editorTitle">New Project</h2>
-    <label>App name</label><input id="name" placeholder="e.g. Daily Journal">
-    <label>What does the app do?</label><textarea id="purpose" placeholder="Describe the app in simple words"></textarea>
-    <label>Main functions</label><textarea id="functions" placeholder="e.g. Add entry, edit, delete, search"></textarea>
-    <label>Starting level</label>
-    <select id="level">
-      <option value="Simple">Simple — start with a complete version</option>
-      <option value="Standard">Standard — build and revise</option>
-      <option value="Advanced">Advanced — build in stages</option>
-    </select>
-    <label>App category / colour</label>
-    <select id="category">
-      <option value="Health — green">Health — green</option>
-      <option value="Work — blue">Work — blue</option>
-      <option value="Finance — gold">Finance — gold</option>
-      <option value="Exercise — orange">Exercise — orange</option>
-      <option value="Learning — purple">Learning — purple</option>
-      <option value="Personal — teal">Personal — teal</option>
-      <option value="Travel — sky blue">Travel — sky blue</option>
-      <option value="Other — choose a suitable colour">Other — choose a suitable colour</option>
-    </select>
-    <label>Icon idea (optional)</label>
-    <input id="icon" placeholder="e.g. heart + pulse, book + pencil, suitcase">
-    <label>Status</label>
-    <select id="status">
-      <option>Working</option><option>Editing</option><option>Paused</option>
-    </select>
-    <label>GitHub link</label><input id="github" placeholder="Paste your GitHub repository link">
-    <label>Current version</label><input id="version" value="V3">
-    <label>Next improvement / notes</label><textarea id="notes" placeholder="What should be done next?"></textarea>
-    <div class="row" style="margin-top:14px">
-      <button class="primary" onclick="saveProject()">Save Project</button>
-      <button class="secondary" onclick="closeEditor()">Cancel</button>
-    </div>
-  </div>
+<div class="card">
+<h2>Previous Entries</h2>
+<input id="search" class="search" placeholder="Search entries..." oninput="displayEntries()">
+<div id="entries"></div>
+</div>
 
-  <div id="guide" class="card hidden">
-    <div class="row" style="justify-content:space-between;align-items:center">
-      <h2 id="guideTitle"></h2>
-      <button class="secondary small" onclick="closeGuide()">← Projects</button>
-    </div>
-    <p id="guideInfo" class="muted"></p>
+<div class="card">
+<h2>Settings</h2>
+<div class="setting"><input type="checkbox" id="passwordEnabled" onchange="togglePasswordSetting()"><label for="passwordEnabled" style="margin:0">Enable password</label></div>
+<div id="passwordSettings" class="hidden">
+<label>Set password</label><input id="newPassword" type="password" placeholder="Enter password">
+<div class="row" style="margin-top:10px"><button class="primary small" onclick="savePassword()">Save Password</button><button class="secondary small" onclick="removePassword()">Remove Password</button></div>
+<p class="muted">The password is stored locally on this device. It is suitable for casual privacy, not high-security protection.</p>
+</div>
+</div>
+</section>
 
-    <div id="simpleCreate" class="step" style="background:#eef7f2;border-left-color:#216e39">
-      <h3>🚀 Create Complete App</h3>
-      <p>For a Simple project, one prompt contains all the project information. Copy it to ChatGPT and ask for the complete working app.</p>
-      <div class="prompt" id="completePrompt"></div>
-      <button class="primary" onclick="copyText('completePrompt')">Copy complete prompt</button>
-    </div>
+<section id="editor" class="hidden">
+<div class="card">
+<div class="row" style="justify-content:space-between;align-items:center"><h2 id="editorTitle">New Mid-Day Entry</h2><button class="secondary small" onclick="showHome()">← Back</button></div>
+<label>Date</label><input id="entryDate" type="date">
+<label>What have I done so far today?</label><textarea id="done" placeholder="Activities, tasks, exercise, reading, appointments..."></textarea>
+<label>How am I feeling?</label><textarea id="feeling" placeholder="How do I feel at this point of the day?"></textarea>
+<label>What have I learned?</label><textarea id="learned" placeholder="Something useful, interesting or meaningful..."></textarea>
+<label>What do I want to accomplish this afternoon/evening?</label><textarea id="remaining" placeholder="The things I would like to complete before the day ends..."></textarea>
+<label>Anything else I want to remember?</label><textarea id="remember" placeholder="A thought, idea, observation or reminder..."></textarea>
+<div class="row" style="margin-top:15px"><button class="primary" onclick="saveEntry()">Save Entry</button><button class="secondary" onclick="showHome()">Cancel</button></div>
+</div>
+</section>
 
-    <div class="step">
-      <h3>Step 1 — Describe the app to ChatGPT</h3>
-      <p>Use these detailed steps for Standard or Advanced projects. Simple projects can use the 🚀 button above.</p>
-      <div class="prompt" id="prompt1"></div>
-      <button class="secondary small" onclick="copyText('prompt1')">Copy prompt</button>
-    </div>
-
-    <div class="step">
-      <h3>Step 2 — Get the complete HTML</h3>
-      <p>Ask ChatGPT to return the complete <b>index.html</b> file. For revisions, request the complete replacement file.</p>
-      <div class="prompt" id="prompt2"></div>
-      <button class="secondary small" onclick="copyText('prompt2')">Copy prompt</button>
-    </div>
-
-    <div class="step">
-      <h3>Step 3 — Put it in GitHub</h3>
-      <p>GitHub → create/open the repository → upload or replace <b>index.html</b> → Commit changes.</p>
-      <div class="check"><input type="checkbox" id="g1"> GitHub file updated</div>
-      <div class="check"><input type="checkbox" id="g2"> Changes committed</div>
-    </div>
-
-    <div class="step">
-      <h3>Step 4 — Open and test</h3>
-      <p>Open the GitHub Pages link if enabled for the repository. Test the app on your phone.</p>
-      <div class="check"><input type="checkbox" id="t1"> App opens</div>
-      <div class="check"><input type="checkbox" id="t2"> Main functions work</div>
-      <div class="check"><input type="checkbox" id="t3"> Phone layout looks good</div>
-    </div>
-
-    <div class="step">
-      <h3>🔧 Revision</h3>
-      <p>Describe only what is wrong. Add a screenshot in ChatGPT when useful.</p>
-      <textarea id="problem" placeholder="e.g. The Edit button is missing..."></textarea>
-      <div class="prompt" id="revisionPrompt"></div>
-      <div class="row">
-        <button class="secondary small" onclick="makeRevision()">Generate revision prompt</button>
-        <button class="secondary small" onclick="copyText('revisionPrompt')">Copy revision prompt</button>
-      </div>
-    </div>
-
-    <div class="step">
-      <h3>Version & notes</h3>
-      <label>New version</label><input id="guideVersion">
-      <label>What changed?</label><textarea id="changeNote" placeholder="e.g. Added Edit button"></textarea>
-      <button class="primary small" onclick="saveUpdate()">Save update</button>
-    </div>
-
-    <div class="row">
-      <button class="danger small" onclick="deleteCurrent()">Delete project</button>
-    </div>
-  </div>
+<section id="view" class="hidden">
+<div class="card">
+<div class="row" style="justify-content:space-between;align-items:center"><h2 id="viewTitle">Journal Entry</h2><button class="secondary small" onclick="showHome()">← Back</button></div>
+<div id="viewContent"></div>
+<div class="row" style="margin-top:15px"><button class="primary" onclick="editCurrent()">Edit</button><button class="danger" onclick="deleteCurrent()">Delete</button></div>
+</div>
+</section>
 </main>
-<footer>V6 • Data is saved locally in this browser.</footer>
+<footer>Mid-Day Journal • Your entries are stored locally on this device.</footer>
 
 <script>
-let projects=JSON.parse(localStorage.getItem("myAppBuilderProjects")||"[]");
-let editIndex=null, currentIndex=null;
+let entries=JSON.parse(localStorage.getItem("midDayJournalEntries")||"[]");
+let editingIndex=-1,viewingIndex=-1;
 
-function save(){localStorage.setItem("myAppBuilderProjects",JSON.stringify(projects));}
-function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
-function render(){
- const box=document.getElementById("projectList");
- if(!projects.length){box.innerHTML='<p class="muted">No projects yet. Tap “New Project” to start.</p>';return;}
- box.innerHTML=projects.map((p,i)=>`
- <div class="project">
-   <h3>${esc(p.name||"Untitled App")}</h3>
-   <span class="badge ${p.status==="Editing"?"editing":p.status==="Paused"?"paused":""}">${esc(p.status)}</span>
-   <span class="badge">${esc(p.version||"V3")}</span>
-   <span class="badge">${esc(p.level||"Simple")}</span>
-   <span class="badge">${esc(p.category||"Personal — teal")}</span>
-   <p class="muted">${esc(p.purpose||"No description")}</p>
-   <div class="row">
-    <button class="primary small" onclick="openGuide(${i})">Open project</button>
-    <button class="secondary small" onclick="editProject(${i})">Edit</button>
-   </div>
- </div>`).join("");
-}
-function showNew(){
- editIndex=null; document.getElementById("editorTitle").textContent="New Project";
- ["name","purpose","functions","github","notes"].forEach(id=>document.getElementById(id).value="");
- document.getElementById("version").value="V3"; document.getElementById("level").value="Simple"; document.getElementById("category").value="Personal — teal"; document.getElementById("icon").value=""; document.getElementById("status").value="Working";
- document.getElementById("editor").classList.remove("hidden");
-}
-function editProject(i){
- editIndex=i; let p=projects[i];
- document.getElementById("editorTitle").textContent="Edit Project";
- ["name","purpose","functions","github","notes"].forEach(id=>document.getElementById(id).value=p[id]||"");
- document.getElementById("version").value=p.version||"V3"; document.getElementById("level").value=p.level||"Simple"; document.getElementById("category").value=p.category||"Personal — teal"; document.getElementById("icon").value=p.icon||""; document.getElementById("status").value=p.status||"Working";
- document.getElementById("editor").classList.remove("hidden");
-}
-function val(id){return document.getElementById(id).value.trim();}
-function saveProject(){
- let p={
-   name:val("name"),
-   purpose:val("purpose"),
-   functions:val("functions"),
-   level:document.getElementById("level").value,
-   category:document.getElementById("category").value,
-   icon:val("icon"),
-   status:document.getElementById("status").value,
-   github:val("github"),
-   version:val("version")||"V3",
-   notes:val("notes")
- };
- if(!p.name){alert("Please enter an app name.");return;}
- if(editIndex===null) projects.push(p); else projects[editIndex]=p;
- save(); closeEditor(); render();
-}
-function closeEditor(){document.getElementById("editor").classList.add("hidden");}
-function openGuide(i){
- currentIndex=i; let p=projects[i];
- document.getElementById("guideTitle").textContent="🛠️ "+p.name;
- document.getElementById("guideInfo").textContent=`${p.level} project • ${p.version} • ${p.status}`;
- let base=`I want to build a simple personal web app called "${p.name}". Purpose: ${p.purpose}. Main functions: ${p.functions}. Starting level: ${p.level}. App category/theme: ${p.category||"Personal — teal"}. Icon idea: ${p.icon||"Create a unique icon that clearly represents the app."}.`;
- document.getElementById("prompt1").textContent=base+` Keep the design clean and mobile-friendly. Use plain HTML, CSS and JavaScript. Avoid unnecessary frameworks or services. Give the app a distinctive visual identity: use the selected category colour and create a simple unique app icon. Prefer an inline SVG or other self-contained icon so no external image file is required.`;
- document.getElementById("prompt2").textContent=`Create the complete working index.html for this app. Keep it self-contained in one file where practical. Make it suitable for use on an iPhone. Use the ${p.category||"Personal — teal"} visual theme and create a unique, simple icon based on "${p.icon||"the app purpose"}". Prefer an inline SVG icon and include it in the app header; do not require external image files. Return the complete file so I can copy and paste it into GitHub. Do not give me partial code.`;
- document.getElementById("completePrompt").textContent=`Create the complete working index.html for my personal web app.
+function todayISO(){let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function formatDate(date){if(!date)return"";return new Date(date+"T12:00:00").toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long",year:"numeric"})}
+function saveData(){localStorage.setItem("midDayJournalEntries",JSON.stringify(entries))}
+function escapeHTML(t){return String(t||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
 
-App name: "${p.name}"
-Purpose: ${p.purpose||"Not specified"}
-Main functions: ${p.functions||"Not specified"}
-Starting level: Simple
-Visual category/colour: ${p.category||"Personal — teal"}
-Icon idea: ${p.icon||"Create a unique icon that clearly represents the app"}
+function showHome(){
+document.getElementById("home").classList.remove("hidden");
+document.getElementById("editor").classList.add("hidden");
+document.getElementById("view").classList.add("hidden");
+document.getElementById("todayText").textContent=formatDate(todayISO());
+displayEntries();
+}
 
-Requirements:
-- Build the complete working app, not a prototype or partial code.
-- Keep everything in one self-contained index.html where practical.
-- Make it clean, simple and easy to use on an iPhone.
-- Use plain HTML, CSS and JavaScript; avoid unnecessary frameworks or external services.
-- Give the app a distinctive visual identity using the selected category colour.
-- Create a simple unique app icon, preferably as an inline SVG, so no external image file is needed.
-- Make all requested functions actually work.
-- Return ONLY the complete index.html code so I can copy and paste it into GitHub.`;
- document.getElementById("simpleCreate").style.display = p.level==="Simple" ? "block" : "none";
- document.getElementById("revisionPrompt").textContent="Enter the problem above, then tap Generate revision prompt.";
- document.getElementById("guideVersion").value=p.version||"V3"; document.getElementById("changeNote").value="";
- document.getElementById("guide").classList.remove("hidden");
+function displayEntries(){
+let box=document.getElementById("entries"),search=document.getElementById("search").value.toLowerCase().trim();
+let list=entries.map((entry,index)=>({entry,index})).filter(item=>{
+if(!search)return true;let e=item.entry;
+return(e.date+e.done+e.feeling+e.learned+e.remaining+e.remember).toLowerCase().includes(search);
+}).sort((a,b)=>b.entry.date.localeCompare(a.entry.date));
+if(!list.length){box.innerHTML='<p class="muted">No journal entries found.</p>';return}
+box.innerHTML=list.map(item=>{
+let e=item.entry,preview=e.done||e.feeling||e.learned||e.remaining||e.remember||"";
+return `<div class="entry"><div class="entry-date">${escapeHTML(formatDate(e.date))}</div><div class="entry-preview">${escapeHTML(preview.substring(0,180))}${preview.length>180?"…":""}</div><div class="row" style="margin-top:10px"><button class="primary small" onclick="viewEntry(${item.index})">View</button><button class="secondary small" onclick="editEntry(${item.index})">Edit</button><button class="danger small" onclick="deleteEntry(${item.index})">Delete</button></div></div>`;
+}).join("");
 }
-function closeGuide(){document.getElementById("guide").classList.add("hidden");render();}
-function copyText(id){
- let t=document.getElementById(id).textContent;
- navigator.clipboard.writeText(t).then(()=>alert("Copied.")).catch(()=>alert("Select and copy the text manually."));
+
+function newEntry(){
+editingIndex=-1;document.getElementById("editorTitle").textContent="New Mid-Day Entry";
+document.getElementById("entryDate").value=todayISO();
+["done","feeling","learned","remaining","remember"].forEach(id=>document.getElementById(id).value="");
+document.getElementById("home").classList.add("hidden");document.getElementById("editor").classList.remove("hidden");document.getElementById("view").classList.add("hidden");window.scrollTo(0,0);
 }
-function makeRevision(){
- let p=projects[currentIndex], problem=document.getElementById("problem").value.trim();
- if(!problem){alert("Describe the problem first.");return;}
- document.getElementById("revisionPrompt").textContent=`Revise my existing "${p.name}" web app. Keep everything that already works, including its ${p.category||"Personal — teal"} visual theme and unique app icon. Fix only the problem described below, unless another change is required for the fix. Return the COMPLETE replacement index.html file, not a partial code snippet. Keep the app mobile-friendly and self-contained. Problem: ${problem}`;
+
+function editEntry(index){
+editingIndex=index;let e=entries[index];document.getElementById("editorTitle").textContent="Edit Mid-Day Entry";
+document.getElementById("entryDate").value=e.date;document.getElementById("done").value=e.done||"";document.getElementById("feeling").value=e.feeling||"";document.getElementById("learned").value=e.learned||"";document.getElementById("remaining").value=e.remaining||"";document.getElementById("remember").value=e.remember||"";
+document.getElementById("home").classList.add("hidden");document.getElementById("editor").classList.remove("hidden");document.getElementById("view").classList.add("hidden");window.scrollTo(0,0);
 }
-function saveUpdate(){
- let p=projects[currentIndex];
- let v=document.getElementById("guideVersion").value.trim()||p.version;
- let note=document.getElementById("changeNote").value.trim();
- p.version=v;
- if(note)p.notes=(p.notes? p.notes+" | ":"")+v+": "+note;
- p.status="Editing";
- save();
- document.getElementById("guideInfo").textContent=`${p.level} project • ${p.version} • ${p.status}`;
- alert("Project updated.");
+
+function saveEntry(){
+let entry={date:document.getElementById("entryDate").value||todayISO(),done:document.getElementById("done").value.trim(),feeling:document.getElementById("feeling").value.trim(),learned:document.getElementById("learned").value.trim(),remaining:document.getElementById("remaining").value.trim(),remember:document.getElementById("remember").value.trim()};
+if(!entry.done&&!entry.feeling&&!entry.learned&&!entry.remaining&&!entry.remember){alert("Please enter something in your journal.");return}
+if(editingIndex===-1)entries.push(entry);else entries[editingIndex]=entry;saveData();showHome();alert("Journal entry saved.");
 }
-function deleteCurrent(){
- if(confirm("Delete this project from this browser?")){projects.splice(currentIndex,1);save();closeGuide();}
+
+function viewEntry(index){
+viewingIndex=index;let e=entries[index];document.getElementById("viewTitle").textContent=formatDate(e.date);
+let sections=[["What I have done so far today",e.done],["How I am feeling",e.feeling],["What I have learned",e.learned],["What I want to accomplish",e.remaining],["What I want to remember",e.remember]];
+document.getElementById("viewContent").innerHTML=sections.map(s=>s[1]?`<div style="margin:15px 0"><h3>${escapeHTML(s[0])}</h3><p style="white-space:pre-wrap;line-height:1.55">${escapeHTML(s[1])}</p></div>`:"").join("");
+document.getElementById("home").classList.add("hidden");document.getElementById("editor").classList.add("hidden");document.getElementById("view").classList.remove("hidden");window.scrollTo(0,0);
 }
-render();
+function editCurrent(){editEntry(viewingIndex)}
+function deleteCurrent(){if(confirm("Delete this journal entry?")){entries.splice(viewingIndex,1);saveData();showHome()}}
+function deleteEntry(index){if(confirm("Delete this journal entry?")){entries.splice(index,1);saveData();displayEntries()}}
+
+function togglePasswordSetting(){
+let enabled=document.getElementById("passwordEnabled").checked;
+document.getElementById("passwordSettings").classList.toggle("hidden",!enabled);
+localStorage.setItem("midDayJournalPasswordEnabled",enabled?"true":"false");
+}
+function savePassword(){
+let password=document.getElementById("newPassword").value;
+if(!password){alert("Please enter a password.");return}
+localStorage.setItem("midDayJournalPassword",password);localStorage.setItem("midDayJournalPasswordEnabled","true");
+alert("Password saved.");document.getElementById("newPassword").value="";
+}
+function removePassword(){
+if(confirm("Remove the journal password?")){
+localStorage.removeItem("midDayJournalPassword");localStorage.setItem("midDayJournalPasswordEnabled","false");
+document.getElementById("passwordEnabled").checked=false;document.getElementById("passwordSettings").classList.add("hidden");alert("Password removed.");
+}}
+function checkPassword(){
+let enabled=localStorage.getItem("midDayJournalPasswordEnabled")==="true";
+document.getElementById("passwordEnabled").checked=enabled;
+document.getElementById("passwordSettings").classList.toggle("hidden",!enabled);
+if(enabled){
+let saved=localStorage.getItem("midDayJournalPassword");
+if(saved){
+let entered=prompt("Enter your Mid-Day Journal password:");
+if(entered!==saved){
+document.body.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#eef8f6"><div><div style="font-size:55px">🔒</div><h2>Mid-Day Journal</h2><p>Incorrect password.</p><button onclick="location.reload()" style="padding:12px 18px;border:0;border-radius:10px;background:#159a8c;color:white;font-weight:bold">Try Again</button></div></div>`;
+return false;
+}}}return true;
+}
+if(checkPassword()){document.getElementById("todayText").textContent=formatDate(todayISO());displayEntries()}
 </script>
 </body>
 </html>
