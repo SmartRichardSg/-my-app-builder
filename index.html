@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My App Builder V5</title>
+<title>My App Builder V6</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f3f5f7;color:#1f2937}
@@ -89,9 +89,16 @@ footer{text-align:center;color:#7b8490;font-size:12px;padding:12px}
     </div>
     <p id="guideInfo" class="muted"></p>
 
+    <div id="simpleCreate" class="step" style="background:#eef7f2;border-left-color:#216e39">
+      <h3>🚀 Create Complete App</h3>
+      <p>For a Simple project, one prompt contains all the project information. Copy it to ChatGPT and ask for the complete working app.</p>
+      <div class="prompt" id="completePrompt"></div>
+      <button class="primary" onclick="copyText('completePrompt')">Copy complete prompt</button>
+    </div>
+
     <div class="step">
       <h3>Step 1 — Describe the app to ChatGPT</h3>
-      <p>Use the prompt below. For a Simple project, ask for a complete working version from the start.</p>
+      <p>Use these detailed steps for Standard or Advanced projects. Simple projects can use the 🚀 button above.</p>
       <div class="prompt" id="prompt1"></div>
       <button class="secondary small" onclick="copyText('prompt1')">Copy prompt</button>
     </div>
@@ -141,7 +148,7 @@ footer{text-align:center;color:#7b8490;font-size:12px;padding:12px}
     </div>
   </div>
 </main>
-<footer>V5 • Data is saved locally in this browser.</footer>
+<footer>V6 • Data is saved locally in this browser.</footer>
 
 <script>
 let projects=JSON.parse(localStorage.getItem("myAppBuilderProjects")||"[]");
@@ -205,6 +212,25 @@ function openGuide(i){
  let base=`I want to build a simple personal web app called "${p.name}". Purpose: ${p.purpose}. Main functions: ${p.functions}. Starting level: ${p.level}. App category/theme: ${p.category||"Personal — teal"}. Icon idea: ${p.icon||"Create a unique icon that clearly represents the app."}.`;
  document.getElementById("prompt1").textContent=base+` Keep the design clean and mobile-friendly. Use plain HTML, CSS and JavaScript. Avoid unnecessary frameworks or services. Give the app a distinctive visual identity: use the selected category colour and create a simple unique app icon. Prefer an inline SVG or other self-contained icon so no external image file is required.`;
  document.getElementById("prompt2").textContent=`Create the complete working index.html for this app. Keep it self-contained in one file where practical. Make it suitable for use on an iPhone. Use the ${p.category||"Personal — teal"} visual theme and create a unique, simple icon based on "${p.icon||"the app purpose"}". Prefer an inline SVG icon and include it in the app header; do not require external image files. Return the complete file so I can copy and paste it into GitHub. Do not give me partial code.`;
+ document.getElementById("completePrompt").textContent=`Create the complete working index.html for my personal web app.
+
+App name: "${p.name}"
+Purpose: ${p.purpose||"Not specified"}
+Main functions: ${p.functions||"Not specified"}
+Starting level: Simple
+Visual category/colour: ${p.category||"Personal — teal"}
+Icon idea: ${p.icon||"Create a unique icon that clearly represents the app"}
+
+Requirements:
+- Build the complete working app, not a prototype or partial code.
+- Keep everything in one self-contained index.html where practical.
+- Make it clean, simple and easy to use on an iPhone.
+- Use plain HTML, CSS and JavaScript; avoid unnecessary frameworks or external services.
+- Give the app a distinctive visual identity using the selected category colour.
+- Create a simple unique app icon, preferably as an inline SVG, so no external image file is needed.
+- Make all requested functions actually work.
+- Return ONLY the complete index.html code so I can copy and paste it into GitHub.`;
+ document.getElementById("simpleCreate").style.display = p.level==="Simple" ? "block" : "none";
  document.getElementById("revisionPrompt").textContent="Enter the problem above, then tap Generate revision prompt.";
  document.getElementById("guideVersion").value=p.version||"V3"; document.getElementById("changeNote").value="";
  document.getElementById("guide").classList.remove("hidden");
